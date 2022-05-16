@@ -34,10 +34,12 @@ namespace VLCControl
         private void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             m_vlcControl.sendCustomCommand("get_title");
-            label5.Text = m_vlcControl.reciveAnswer();
+            var answer = m_vlcControl.reciveAnswer();
+            if (!answer.ToLower().Contains("status change"))
+                label5.Text = answer;
             if (label5.Text != title)
             {
-                txbLog.AppendText(count1 + " " + count2 + " " + title +"\r\n");
+                txbLog.AppendText(count1 + " " + count2 + " " + title);
                 title = label5.Text;
                 count1 = 0;
                 count2 = 0;
@@ -77,7 +79,7 @@ namespace VLCControl
             Int32 port = 4444;
             TcpClient client = new TcpClient("127.0.0.1", port);
             NetworkStream stream = client.GetStream();
-           // txbLog.AppendText("Sent help command\r\n");
+            txbLog.AppendText("Sent help command\r\n");
             Byte[] data = System.Text.Encoding.UTF8.GetBytes("help\n");
             stream.Write(data, 0, data.Length);
 
@@ -88,7 +90,7 @@ namespace VLCControl
             {                
                 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-               // txbLog.AppendText(responseData);
+                txbLog.AppendText(responseData);
             }
             stream.Close();
             client.Close();
