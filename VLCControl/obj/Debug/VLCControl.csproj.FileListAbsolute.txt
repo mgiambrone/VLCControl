@@ -1,0 +1,10 @@
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\bin\Debug\VLCControl.exe.config
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\bin\Debug\VLCControl.exe
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\bin\Debug\VLCControl.pdb
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\obj\Debug\VLCControl.csproj.AssemblyReference.cache
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\obj\Debug\VLCControl.mainForm.resources
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\obj\Debug\VLCControl.Properties.Resources.resources
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\obj\Debug\VLCControl.csproj.GenerateResource.cache
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\obj\Debug\VLCControl.csproj.CoreCompileInputs.cache
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\obj\Debug\VLCControl.exe
+C:\Users\xphac\OneDrive\Documents\GitHub\VLCControl\VLCControl\obj\Debug\VLCControl.pdb
