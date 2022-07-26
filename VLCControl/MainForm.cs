@@ -88,7 +88,7 @@ namespace VLCControl
                 {
                     using (StreamWriter sw = File.AppendText(path))
                     {
-                        sw.WriteLine(count1 + "," + count2 + "," + (count1 + count2) + "," + label5.Text + "\r\n");
+                        sw.WriteLine(count1 + "," + count2 + "," + (count1 + count2) + "," + label5.Text + ","+DateTime.Now.ToString()+"\r\n");
                     }
                     txbLog.AppendText(count1 + " " + count2 + " " + (count1 + count2) + " " + label5.Text + "\r\n");
                     dt.Rows.Add(count1, count2, count1 + count2, label5.Text, videolength);
@@ -129,6 +129,10 @@ namespace VLCControl
             if (e.KeyCode == Keys.P)
             {
                 m_vlcControl.sendCustomCommand("pause");
+                if (dt.Rows.Count > 6)
+                {
+                    CleanUp();
+                }
             }
             if (e.KeyCode == Keys.Oemplus)
             {
@@ -165,6 +169,27 @@ namespace VLCControl
 
             }
             //m_vlcControl.sendCustomCommand("@name marq-marquee \"" + count1 + " " + count2 + "\"");
+        }
+
+        private void CleanUp()
+        {
+            DataRow prerow = dt.AsEnumerable().Last();
+            DataTable dupes = dt.Clone();
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row[3].ToString() == prerow[3].ToString())
+                {
+                    row[0] = row.Field<int>(0) + prerow.Field<int>(0);
+                    row[1] = row.Field<int>(1) + prerow.Field<int>(1);
+                    row[2] = row.Field<int>(2) + prerow.Field<int>(2);
+                    dupes.Rows.Add(prerow);                    
+                }
+                prerow = row;
+                foreach (DataRow dupe in dupes.Rows)
+                {
+                    dt.Rows.Remove(dupe);
+                }
+            }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
