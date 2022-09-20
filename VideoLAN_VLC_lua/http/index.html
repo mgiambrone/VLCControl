@@ -393,13 +393,13 @@
 				
 			
 		<table id="dataTable" class="table table-striped">
-		<tr class="table-primary">
+		<tr id="datatableheader" class="table-primary">
 			<th>Count A</th>
 			<th>Count B</th>
 			<th>Sum</th>
 			<th>TimeSlot</th>	
 			<th>#</th>
-			<th>Filenames</th>			
+			<th>Filenames</th>		</tr>	
 			
 			
 			<tbody id="myTable">
@@ -441,7 +441,7 @@ document.body.onkeyup = function (e) {
 		var table = document.getElementById('myTable');
 		$("#myTable").empty();
 		for (const i in data){
-			if(data[i].filename!=''){
+			if(data[i].interval>0){
 			let row = `<tr>							
 							<td>${data[i].countA}</td>
 							<td>${data[i].countB}</td>
@@ -465,6 +465,8 @@ document.body.onkeyup = function (e) {
 
 var copyBtn = document.querySelector('#copy_btn');
 copyBtn.addEventListener('click', function () {
+	var row = document.getElementById("datatableheader");
+	row.parentNode.removeChild(row);
 	el = document.querySelector('#dataTable');
 	var body = document.body,
 	  range,

@@ -22,10 +22,10 @@ function updateStatus() {
                 $('.dynamic').empty();
                 $('#mediaTitle').append($('[name="filename"]', data).text());
                 let text = $('[name="filename"]', data).text();
-                let timestamp = text.substring(text.indexOf("T")-8,text.indexOf("T")+7);
-                let hour = parseInt(text.substring(text.indexOf("T")+1,text.indexOf("T")+3));
-                let minutes =  parseInt(text.substring(text.indexOf("T")+3,text.indexOf("T")+5));
-                let seconds = parseInt(text.substring(text.indexOf("T")+5,text.indexOf("T")+7));
+                let timestamp = text.substring(text.lastIndexOf("T")-8,text.lastIndexOf("T")+7);
+                let hour = parseInt(text.substring(text.lastIndexOf("T")+1,text.lastIndexOf("T")+3));
+                let minutes =  parseInt(text.substring(text.lastIndexOf("T")+3,text.lastIndexOf("T")+5));
+                let seconds = parseInt(text.substring(text.lastIndexOf("T")+5,text.lastIndexOf("T")+7));
                 //console.log(+);
                 let elapsedseconds = parseInt($('time', data).text());
                 //console.log((hour*3600+minutes*60+seconds+elapsedseconds);
