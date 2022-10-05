@@ -24,8 +24,8 @@ namespace VLCControl
         public String getVLCExe()
         {
             String res = "";
-            String keyName32 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\VideoLAN\VLC";
-            String keyName64 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\VideoLAN\VLC";
+            String keyName32 = @"HKEY_LOCAL_MACHINE\SOFTWARE\VideoLAN\VLC";
+            String keyName64 = @"HKEY_LOCAL_MACHINE\SOFTWARE\VideoLAN\VLC";
 
             String valueName = "InstallDir";
 
