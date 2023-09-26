@@ -22,23 +22,25 @@ function updateStatus() {
                 $('.dynamic').empty();
                 $('#mediaTitle').append($('[name="filename"]', data).text());
                 let text = $('[name="filename"]', data).text();
-                let timestamp = text.substring(text.lastIndexOf("T")-8,text.lastIndexOf("T")+7);
-                let hour = parseInt(text.substring(text.lastIndexOf("T")+1,text.lastIndexOf("T")+3));
-                let minutes =  parseInt(text.substring(text.lastIndexOf("T")+3,text.lastIndexOf("T")+5));
-                let seconds = parseInt(text.substring(text.lastIndexOf("T")+5,text.lastIndexOf("T")+7));
+                let timestamp = text.substring(text.lastIndexOf("_") - 8, text.lastIndexOf("_") + 7);
+                let hour = parseInt(text.substring(text.lastIndexOf("_") + 1, text.lastIndexOf("_") + 3));
+                let minutes = parseInt(text.substring(text.lastIndexOf("_") + 3, text.lastIndexOf("_") + 5));
+                let seconds = 0;//parseInt(text.substring(text.lastIndexOf("_")+5,text.lastIndexOf("_")+7));
                 //console.log(+);
                 let elapsedseconds = parseInt($('time', data).text());
                 //console.log((hour*3600+minutes*60+seconds+elapsedseconds);
                 $('#totalTime').append(format_time($('length', data).text()));
                 $('#currentTime').append(format_time($('time', data).text()));
-                $('#currentDayTime').append(format_time(hour*3600+minutes*60+seconds+elapsedseconds));
-                daily5minuteinterval = parseInt((hour*3600+minutes*60+seconds+elapsedseconds)/300);
-                if(!counts[daily5minuteinterval]){
-                    counts[daily5minuteinterval] = {filename:text,interval:daily5minuteinterval,countA:0,countB:0,videotime:format_time($('length', data).text()),
-                    timeinterval:format_time(daily5minuteinterval*5*60).slice(0, -3)};
+                $('#currentDayTime').append(format_time(hour * 3600 + minutes * 60 + seconds + elapsedseconds));
+                daily5minuteinterval = parseInt((hour * 3600 + minutes * 60 + seconds + elapsedseconds) / 300);
+                if (!counts[daily5minuteinterval]) {
+                    counts[daily5minuteinterval] = {
+                        filename: text, interval: daily5minuteinterval, countA: 0, countB: 0, videotime: format_time($('length', data).text()),
+                        timeinterval: format_time(daily5minuteinterval * 5 * 60).slice(0, -3)
+                    };
                 }
-                if(!counts[daily5minuteinterval].filename.includes(text)){
-                    counts[daily5minuteinterval].filename += ","+text;
+                if (!counts[daily5minuteinterval].filename.includes(text)) {
+                    counts[daily5minuteinterval].filename += "," + text;
                 }
                 $('#current5Time').append(daily5minuteinterval);
                 if (!$('#seekSlider').data('clicked')) {
@@ -112,7 +114,7 @@ function updateStatus() {
             $('band', data).each(function () {
                 var id = $(this).attr('id');
                 var value = $(this).text() ? $(this).text() : 0;
-                var freq = ["60 Hz","170 Hz", "310 Hz", "600 Hz", "1 kHz","3 kHz", "6 kHz", "12 kHz" , "14 kHz" , "16 kHz" ];
+                var freq = ["60 Hz", "170 Hz", "310 Hz", "600 Hz", "1 kHz", "3 kHz", "6 kHz", "12 kHz", "14 kHz", "16 kHz"];
                 if (!$('#eq_container' + id).length) {
                     $('#window_equalizer').append('<div style="float:left;width:44px;" align="center" id="eq_container' + id + '"><div id="eq' + id + '_txt">' + value + 'dB</div><div class="eqBand" id="eq' + id + '" style="font-size: 18px;"></div><div>' + freq[id] + '</div></div>');
                     $('#eq' + id).slider({
@@ -158,10 +160,10 @@ function updatePlayList(force_refresh) {
     } else {
         //iterate through playlist..
         var match = false;
-        $('.jstree-leaf').each(function(){
+        $('.jstree-leaf').each(function () {
             var id = $(this).attr('id');
-            if (id != null && id.substr(0,5) == 'plid_') {
-                if ( id.substr(5) == current_playlist_id ) {
+            if (id != null && id.substr(0, 5) == 'plid_') {
+                if (id.substr(5) == current_playlist_id) {
                     $(this).addClass('ui-state-highlight');
                     $(this).attr('current', 'current');
                     this.scrollIntoView(true);
@@ -174,9 +176,9 @@ function updatePlayList(force_refresh) {
                     $($(this).children('a')[0]).removeClass('ui-state-active');
                 }
             }
-    	});
-    	//local title wasn't found - refresh playlist..
-    	if (!match) updatePlayList(true);
+        });
+        //local title wasn't found - refresh playlist..
+        if (!match) updatePlayList(true);
     }
 }
 
@@ -236,51 +238,51 @@ function browse(dir) {
             });
             $('[openfile]').dblclick(function () {
                 switch (tgt) {
-                case '#stream_input':
-                    $(browse_target).val($(this).attr('openfile'));
-                    break;
-                case '#mosaic_open':
-                    $('li', browse_target).remove();
-                    $(browse_target).append(this);
-                    $(this).css({
-                        'margin-left': -40,
-                        'margin-top': -46,
-                        'float': 'left'
-                    });
-                    break;
-                case '#mobile':
-                    break;
-                default:
-                    sendCommand('command=in_play&input=' + encodeURIComponent($(this).attr('openfile')));
-                    updatePlayList(true);
-                    break;
+                    case '#stream_input':
+                        $(browse_target).val($(this).attr('openfile'));
+                        break;
+                    case '#mosaic_open':
+                        $('li', browse_target).remove();
+                        $(browse_target).append(this);
+                        $(this).css({
+                            'margin-left': -40,
+                            'margin-top': -46,
+                            'float': 'left'
+                        });
+                        break;
+                    case '#mobile':
+                        break;
+                    default:
+                        sendCommand('command=in_play&input=' + encodeURIComponent($(this).attr('openfile')));
+                        updatePlayList(true);
+                        break;
                 }
                 $('#window_browse').dialog('close');
             });
             $('[opendir]').click(function () {
                 switch (tgt) {
-                case '#mobile':
-                    browse($(this).attr('opendir'));
-                    break;
-                default:
-                    break;
+                    case '#mobile':
+                        browse($(this).attr('opendir'));
+                        break;
+                    default:
+                        break;
                 }
             });
             $('[openfile]').click(function () {
                 switch (tgt) {
-                case '#mobile':
-                    sendCommand('command=in_play&input=' + encodeURIComponent($(this).attr('openfile')), "window.location='mobile.html'");
-                    break;
-                default:
-                    break;
+                    case '#mobile':
+                        sendCommand('command=in_play&input=' + encodeURIComponent($(this).attr('openfile')), "window.location='mobile.html'");
+                        break;
+                    default:
+                        break;
                 }
             });
             switch (tgt) {
-            case '#mobile':
-                break;
-            default:
-                $('[selectable]').selectable();
-                break;
+                case '#mobile':
+                    break;
+                default:
+                    $('[selectable]').selectable();
+                    break;
             }
         },
         error: function (jqXHR, status, error) {
@@ -369,11 +371,11 @@ function updateStreams() {
             });
             $('.button').hover(
 
-            function () {
-                $(this).addClass('ui-state-hover');
-            }, function () {
-                $(this).removeClass('ui-state-hover');
-            });
+                function () {
+                    $(this).addClass('ui-state-hover');
+                }, function () {
+                    $(this).removeClass('ui-state-hover');
+                });
             $('#stream_info').accordion({
                 header: "h3",
                 collapsible: true,
@@ -409,7 +411,7 @@ function updateEQ() {
         url: 'requests/status.xml',
         success: function (data, status, jqXHR) {
             $('band', data).each(function () {
-                var freq = ["60 Hz","170 Hz", "310 Hz", "600 Hz", "1 kHz","3 kHz", "6 kHz", "12 kHz" , "14 kHz" , "16 kHz" ];
+                var freq = ["60 Hz", "170 Hz", "310 Hz", "600 Hz", "1 kHz", "3 kHz", "6 kHz", "12 kHz", "14 kHz", "16 kHz"];
                 var id = $(this).attr('id');
                 var value = $(this).text() ? $(this).text() : 0;
                 if (!$('#eq_container' + id).length) {
